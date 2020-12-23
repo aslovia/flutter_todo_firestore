@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_firestore/base/widget/BaseWidgets.dart';
 import 'package:flutter_todo_firestore/main.dart';
+import 'package:flutter_todo_firestore/module/task_form/TaskForm.dart';
 import 'package:flutter_todo_firestore/module/task_list/ListWidgets.dart';
 import 'package:flutter_todo_firestore/network/ApiHelper.dart';
+
 class TaskList extends StatefulWidget {
   @override
   _TaskListState createState() => _TaskListState();
@@ -23,7 +26,7 @@ class _TaskListState extends State<TaskList> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            ListWidgets().displayBackground(context),
+            BaseWidgets().displayBackground(context),
             ListWidgets().displayListActivity(context, apiHelper)
           ],
         ),
@@ -31,10 +34,11 @@ class _TaskListState extends State<TaskList> {
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
-          color: Colors.white,
+          color: Colors.red,
         ),
         onPressed: () async {
-          // TODO: fitur tambah task
+          await Navigator.push(
+              context, MaterialPageRoute(builder: (context) => TaskForm()));
         },
         backgroundColor: mainColor,
       ),

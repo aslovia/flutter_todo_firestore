@@ -6,38 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ListWidgets {
-  Widget displayBackground(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          top: -64,
-          right: -128,
-          child: Container(
-            width: 256.0,
-            height: 256.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9000),
-              color: mainColor,
-            ),
-          ),
-        ),
-        Positioned(
-          top: -164,
-          right: -8.0,
-          child: Container(
-            width: 256.0,
-            height: 256.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9000),
-              backgroundBlendMode: BlendMode.hardLight,
-              color: Colors.redAccent.withOpacity(0.8),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
   Widget displayListActivity(BuildContext context, ApiHelper apiHelper) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double widthScreen = mediaQueryData.size.width;
@@ -71,6 +39,13 @@ class ListWidgets {
                       if (snapshot.hasError) {
                         return Center(child: Text(snapshot.error.toString()));
                       }
+                      if (snapshot.data.isEmpty) {
+                        return Center(
+                            child: Text(
+                          "Tidak Ada Data Todo List",
+                          style: TextStyle(color: Colors.white),
+                        ));
+                      }
                       return ListView.builder(
                           padding: EdgeInsets.all(3),
                           itemCount: snapshot.data.length,
@@ -90,7 +65,8 @@ class ListWidgets {
                                   child: Center(
                                     child: Text(
                                       number.toString(),
-                                      style: TextStyle(color: Colors.white),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12, color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -115,7 +91,7 @@ class ListWidgets {
                                                   'id')
                                               .format(myDateTime) +
                                           " WIB",
-                                      style: GoogleFonts.poppins(fontSize: 12),
+                                      style: GoogleFonts.poppins(fontSize: 11),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
