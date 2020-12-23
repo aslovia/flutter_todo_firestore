@@ -5,7 +5,7 @@ class ApiHelper {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
   Stream<List<Task>> getTaskList() {
-    var result = db.collection('task').snapshots().map(
+    var result = db.collection('task').orderBy('date').snapshots().map(
           (snapshot) => snapshot.documents
               .map(
                 (doc) => Task.fromMap(doc.data(), doc.documentID),
