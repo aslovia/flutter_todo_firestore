@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_firestore/base/widget/BaseWidgets.dart';
-import 'package:flutter_todo_firestore/module/task_form/TaskFromWidgets.dart';
+import 'file:///D:/AndroidStudioProjects/explore/lib/base/widget/TaskFromWidgets.dart';
 
 import '../../main.dart';
 
@@ -30,7 +30,16 @@ class _TaskFormState extends State<TaskForm> {
         child: Stack(
           children: <Widget>[
             BaseWidgets().displayBackground(context),
-            TaskFormWidgets().displayTaskForm(context, widget.form)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TaskFormWidgets().displayTaskForm(
+                    context, widget.form, widthScreen, heightScreen),
+                SizedBox(height: 80.0),
+                TaskFormWidgets().displayFormList(
+                    context, nameCont, descCont, dateCont)
+              ],
+            )
           ],
         ),
       ),

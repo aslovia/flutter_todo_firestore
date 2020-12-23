@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../main.dart';
 
@@ -35,7 +36,23 @@ class BaseWidgets {
     );
   }
 
-  // Widget displayFormAddEdit(BuildContext context) {
-  //   return
-  // }
+  Widget displayTemplateForm(BuildContext context,
+      TextEditingController controller, String labelText, IconData icon) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        suffixIcon: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(icon),
+          ],
+        ),
+        border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.circular(8)),
+      ),
+      style: GoogleFonts.poppins(fontSize: 12),
+    );
+  }
 }
