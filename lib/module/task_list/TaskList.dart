@@ -38,7 +38,7 @@ class _TaskListState extends State<TaskList> {
         ),
         onPressed: () async {
           await Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TaskForm()));
+              context, MaterialPageRoute(builder: (context) => TaskForm(form: "Add",)));
         },
         backgroundColor: mainColor,
       ),
