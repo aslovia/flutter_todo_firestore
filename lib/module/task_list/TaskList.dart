@@ -22,7 +22,7 @@ class _TaskListState extends State<TaskList> {
         child: Stack(
           children: <Widget>[
             BaseWidgets().displayBackground(context),
-            ListWidgets().displayListActivity(context, apiHelper)
+            ListWidgets().displayListActivity(context, apiHelper, delete)
           ],
         ),
       ),
@@ -37,6 +37,37 @@ class _TaskListState extends State<TaskList> {
         },
         backgroundColor: mainColor,
       ),
+    );
+  }
+
+  void delete(task) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        print("ini id " + task.id);
+        return AlertDialog(
+          title: Text('Are You Sure'),
+          content: Text('Do you want to delete ${task.name}?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('Delete'),
+              onPressed: () {
+                apiHelper.deleteTask(task.id).then((value) => {
+                  Navigator.pop(context)
+                }).catchError((e){
+                  BaseWidgets().showSnackBarMessage(context, "Error Server");
+                });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

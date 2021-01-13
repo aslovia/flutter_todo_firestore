@@ -66,9 +66,9 @@ class _TaskFormState extends State<TaskForm> {
 
   void send() async {
     if (nameCont.text.isEmpty) {
-      _showSnackBarMessage(context, "Name is Required");
+      BaseWidgets().showSnackBarMessage(context, "Name is Required");
     } else if (descCont.text.isEmpty) {
-      _showSnackBarMessage(context, "Description is Required");
+      BaseWidgets().showSnackBarMessage(context, "Description is Required");
     }
 
     if (widget.form == "add") {
@@ -79,17 +79,8 @@ class _TaskFormState extends State<TaskForm> {
       apiHelper.addTask(task).then((value) {
         Navigator.pop(context);
       }).catchError((e) {
-        _showSnackBarMessage(context, "Error Server");
+        BaseWidgets().showSnackBarMessage(context, "Error Server");
       });
     }
-  }
-
-  Widget _showSnackBarMessage(BuildContext context, String message) {
-    return Flushbar(
-      flushbarPosition: FlushbarPosition.TOP,
-      title: "Info",
-      message: message,
-      duration: Duration(seconds: 3),
-    )..show(context);
   }
 }

@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ListWidgets {
-  Widget displayListActivity(BuildContext context, ApiHelper apiHelper) {
+  Widget displayListActivity(
+      BuildContext context, ApiHelper apiHelper, Function delete) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double widthScreen = mediaQueryData.size.width;
     double heightScreen = mediaQueryData.size.height;
@@ -112,7 +113,7 @@ class ListWidgets {
                                     if (value == 'edit') {
                                       // TODO: fitur edit task
                                     } else if (value == 'delete') {
-                                      // TODO: fitur hapus task
+                                      delete(task);
                                     }
                                   },
                                   child: Icon(Icons.more_vert),

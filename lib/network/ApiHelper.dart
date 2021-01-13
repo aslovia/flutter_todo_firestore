@@ -21,5 +21,10 @@ class ApiHelper {
     return result;
   }
 
+  Future deleteTask(String id) async {
+    var tasks = db.collection('task').document(id).delete();
+    return tasks;
+  }
+
 
 }

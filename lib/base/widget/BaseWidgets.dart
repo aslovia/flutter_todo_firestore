@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -54,5 +55,14 @@ class BaseWidgets {
       ),
       style: GoogleFonts.poppins(fontSize: 12),
     );
+  }
+
+  Widget showSnackBarMessage(BuildContext context, String message) {
+    return Flushbar(
+      flushbarPosition: FlushbarPosition.TOP,
+      title: "Info",
+      message: message,
+      duration: Duration(seconds: 3),
+    )..show(context);
   }
 }
