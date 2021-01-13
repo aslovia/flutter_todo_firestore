@@ -24,7 +24,7 @@ class TaskFormWidgets {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                Text(form == "Add" ? 'Create\nNew Task' : 'Edit\nTask',
+                Text(form == "add" ? 'Create\nNew Task' : 'Edit\nTask',
                     style:
                         GoogleFonts.poppins(fontSize: 20, color: Colors.white)),
               ],
@@ -37,33 +37,48 @@ class TaskFormWidgets {
 
   Widget displayFormList(BuildContext context, TextEditingController nameCont,
       TextEditingController descCont, TextEditingController dateCont) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24.0),
-            topRight: Radius.circular(24.0),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: 16),
-              BaseWidgets()
-                  .displayTemplateForm(context, nameCont, "Activity", null),
-              SizedBox(height: 16),
-              BaseWidgets().displayTemplateForm(
-                  context, descCont, "Description", Icons.description),
-              SizedBox(height: 16),
-              BaseWidgets().displayTemplateForm(
-                  context, dateCont, "Date", Icons.date_range_outlined),
-            ],
-          ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(height: 16),
+            BaseWidgets()
+                .displayTemplateForm(context, nameCont, "Activity", null),
+            SizedBox(height: 16),
+            BaseWidgets().displayTemplateForm(
+                context, descCont, "Description", Icons.description),
+            SizedBox(height: 16),
+            BaseWidgets().displayTemplateForm(
+                context, dateCont, "Date", Icons.date_range_outlined),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget displayButton(BuildContext context, String formType, Function send) {
+    return Container(
+      width: double.infinity,
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: RaisedButton(
+        onPressed: send,
+        color: Colors.blueGrey,
+        child: Text(formType == "add" ? "Create" : "Update",
+            style: GoogleFonts.poppins(
+                fontSize: 15,
+                fontWeight: FontWeight.w300,
+                color: Colors.white)),
       ),
     );
   }

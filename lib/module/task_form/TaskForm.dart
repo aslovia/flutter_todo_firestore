@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_firestore/base/widget/BaseWidgets.dart';
-import 'file:///D:/AndroidStudioProjects/explore/lib/base/widget/TaskFromWidgets.dart';
+import 'package:flutter_todo_firestore/model/Task.dart';
+import 'package:flutter_todo_firestore/network/ApiHelper.dart';
 
+import '../../base/widget/TaskFromWidgets.dart';
 import '../../main.dart';
 
 class TaskForm extends StatefulWidget {
@@ -14,6 +18,9 @@ class TaskForm extends StatefulWidget {
 }
 
 class _TaskFormState extends State<TaskForm> {
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+  ApiHelper apiHelper = new ApiHelper();
+  final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   final TextEditingController nameCont = TextEditingController();
   final TextEditingController descCont = TextEditingController();
   final TextEditingController dateCont = TextEditingController();
@@ -23,6 +30,7 @@ class _TaskFormState extends State<TaskForm> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: scaffoldState,
       backgroundColor: baseColor,
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: false,
@@ -36,13 +44,52 @@ class _TaskFormState extends State<TaskForm> {
                 TaskFormWidgets().displayTaskForm(
                     context, widget.form, widthScreen, heightScreen),
                 SizedBox(height: 80.0),
-                TaskFormWidgets().displayFormList(
-                    context, nameCont, descCont, dateCont)
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TaskFormWidgets().displayFormList(
+                            context, nameCont, descCont, dateCont),
+                        TaskFormWidgets()
+                            .displayButton(context, widget.form, send)
+                      ],
+                    ),
+                  ),
+                )
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  void send() async {
+    if (nameCont.text.isEmpty) {
+      _showSnackBarMessage(context, "Name is Required");
+    } else if (descCont.text.isEmpty) {
+      _showSnackBarMessage(context, "Description is Required");
+    }
+
+    if (widget.form == "add") {
+      Task task = Task(
+          name: nameCont.text,
+          date: Timestamp.fromDate(DateTime.now()),
+          desc: descCont.text);
+      apiHelper.addTask(task).then((value) {
+        Navigator.pop(context);
+      }).catchError((e) {
+        _showSnackBarMessage(context, "Error Server");
+      });
+    }
+  }
+
+  Widget _showSnackBarMessage(BuildContext context, String message) {
+    return Flushbar(
+      flushbarPosition: FlushbarPosition.TOP,
+      title: "Info",
+      message: message,
+      duration: Duration(seconds: 3),
+    )..show(context);
   }
 }

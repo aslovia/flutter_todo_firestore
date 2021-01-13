@@ -14,7 +14,7 @@ class Task {
         desc = snapshot['desc'] ?? '',
         date = snapshot['date'] ?? '';
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toAddTask() {
     return {
       "name" : name,
       "desc" : desc,

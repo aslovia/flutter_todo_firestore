@@ -14,4 +14,12 @@ class ApiHelper {
         );
     return result;
   }
+
+  Future addTask(Task task) async {
+    var tasks = db.collection('task');
+    DocumentReference  result = await tasks.add(task.toAddTask());
+    return result;
+  }
+
+
 }

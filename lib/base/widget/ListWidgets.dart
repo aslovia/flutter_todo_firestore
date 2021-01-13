@@ -31,7 +31,6 @@ class ListWidgets {
                     stream: apiHelper.getTaskList(),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<Task>> snapshot) {
-                      print("ini data " + snapshot.toString());
                       if (snapshot.connectionState == ConnectionState.waiting ||
                           !snapshot.hasData) {
                         return Center(child: CircularProgressIndicator());

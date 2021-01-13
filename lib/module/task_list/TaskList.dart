@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_firestore/base/widget/BaseWidgets.dart';
 import 'package:flutter_todo_firestore/main.dart';
 import 'package:flutter_todo_firestore/module/task_form/TaskForm.dart';
-import 'file:///D:/AndroidStudioProjects/explore/lib/base/widget/ListWidgets.dart';
 import 'package:flutter_todo_firestore/network/ApiHelper.dart';
+
+import '../../base/widget/ListWidgets.dart';
 
 class TaskList extends StatefulWidget {
   @override
@@ -11,13 +12,7 @@ class TaskList extends StatefulWidget {
 }
 
 class _TaskListState extends State<TaskList> {
-  ApiHelper apiHelper;
-
-  @override
-  void initState() {
-    super.initState();
-    apiHelper = new ApiHelper();
-  }
+  ApiHelper apiHelper = new ApiHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +33,7 @@ class _TaskListState extends State<TaskList> {
         ),
         onPressed: () async {
           await Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TaskForm(form: "Add",)));
+              context, MaterialPageRoute(builder: (context) => TaskForm(form: "add")));
         },
         backgroundColor: mainColor,
       ),
