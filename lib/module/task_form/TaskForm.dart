@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_firestore/base/widget/BaseWidgets.dart';
+import 'package:flutter_todo_firestore/base/widget/TaskFromWidgets.dart';
+import 'package:flutter_todo_firestore/main.dart';
 import 'package:flutter_todo_firestore/model/Task.dart';
 import 'package:flutter_todo_firestore/network/ApiHelper.dart';
-
-import '../../base/widget/TaskFromWidgets.dart';
-import '../../main.dart';
 
 class TaskForm extends StatefulWidget {
   final String form;
@@ -76,11 +75,18 @@ class _TaskFormState extends State<TaskForm> {
           name: nameCont.text,
           date: Timestamp.fromDate(DateTime.now()),
           desc: descCont.text);
-      apiHelper.addTask(task).then((value) {
-        Navigator.pop(context);
-      }).catchError((e) {
-        BaseWidgets().showSnackBarMessage(context, "Error Server");
-      });
+
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        BaseWidgets().showSnackBarMessage(context, "No Connection");
+      } else {
+        apiHelper.addTask(task).then((value) {
+          Navigator.pop(context);
+        }).catchError((e) {
+          print(e);
+          BaseWidgets().showSnackBarMessage(context, "Error Server");
+        });
+      }
     }
   }
 }

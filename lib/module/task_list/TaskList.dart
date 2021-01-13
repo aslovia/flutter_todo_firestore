@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_firestore/base/widget/BaseWidgets.dart';
 import 'package:flutter_todo_firestore/main.dart';
@@ -57,12 +58,18 @@ class _TaskListState extends State<TaskList> {
             ),
             FlatButton(
               child: Text('Delete'),
-              onPressed: () {
-                apiHelper.deleteTask(task.id).then((value) => {
-                  Navigator.pop(context)
-                }).catchError((e){
-                  BaseWidgets().showSnackBarMessage(context, "Error Server");
-                });
+              onPressed: () async {
+                Navigator.pop(context);
+                var connectivityResult = await (Connectivity().checkConnectivity());
+                if (connectivityResult == ConnectivityResult.none) {
+                  BaseWidgets().showSnackBarMessage(context, "No Connection");
+                } else {
+                  apiHelper.deleteTask(task.id).then((value) => {
+                    Navigator.pop(context)
+                  }).catchError((e){
+                    BaseWidgets().showSnackBarMessage(context, "Error Server");
+                  });
+                }
               },
             ),
           ],

@@ -36,6 +36,7 @@ dependencies:
   cloud_firestore: ^0.14.4
   firebase_core : ^0.5.0
   flushbar: ^1.10.4
+  connectivity: ^2.0.2
 
   # Plugin for provides internationalization and localization, facilities, including message
   # translation, plurals and genders, date/number formatting and parsing, and bidirectional text
